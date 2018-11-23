@@ -2,8 +2,8 @@
 // @name        Youtube recommended
 // @namespace   youtube, recommended
 // @description Удаление из рекомендуемого в пару кликов
-// @include     https://www.youtube.com/
-// @version     2
+// @include     https://www.youtube.com/*
+// @version     2.1
 // @grant       none
 // @author      BaNru
 // @license     GNU GPL v3
@@ -32,7 +32,7 @@ function removethis(el){
 	if (document.querySelector('ytd-popup-container iron-dropdown') && document.querySelector('ytd-popup-container iron-dropdown').style.display !== "none"){
 		document.querySelector('ytd-popup-container iron-dropdown').style.display = "none";
 	}
-	var thisli = this.closest('ytd-grid-video-renderer');
+	var thisli = this.closest('ytd-grid-video-renderer,ytd-compact-video-renderer');
 	thisli.querySelector('button#button').click();
 	removthisevent(thisli);
 }
@@ -72,7 +72,11 @@ function removthisevent(thisli){
 
 /* Добавляем кнопки удаления */
 function addBTN(parentel,el){
-	var list = el.closest('#dismissable').querySelectorAll('ytd-grid-video-renderer');
+  if(el){
+		var list = el.closest('#dismissable').querySelectorAll('ytd-grid-video-renderer');
+	}else{
+	var list = parentel.querySelectorAll('ytd-compact-video-renderer');
+  }
 	/*
 	delall.onclick = function(){
 		removeall(list);
@@ -93,23 +97,51 @@ function addBTN(parentel,el){
 document.querySelector('body').insertAdjacentHTML('beforeend', '<style>.delall,.remthis{background-color:#008bec;color:#fff;cursor:pointer;font-size:12px;padding:2px 7px;z-index:2000;}.delall{margin:1px;float:right;}.remthis{margin:5px;position:absolute;display:block;}.delall:hover,.remthis:hover{background-color:#cb4437}</style>');
 
 
-var titlelist = document.querySelectorAll('h2 span.style-scope.ytd-shelf-renderer');
-[].forEach.call(titlelist, function(el) {
+// Запускаем скрипт на главной
+if(document.location.pathname == "/"){
+  var titlelist = document.querySelectorAll('h2 span.style-scope.ytd-shelf-renderer');
+  [].forEach.call(titlelist, function(el) {
 	var title = el.textContent.trim();
-	// Ищем Рекомендованные
+	// Ищем Рекомендованные на главной
 	if(title == "Рекомендованные"){
-		var parentel = el.closest('div.style-scope.ytd-shelf-renderer');
-		/* "Удалить всё" недописана
-		if(!parentel.querySelector('.delall')){
-			var delall = document.createElement('span');
-			delall.textContent = 'Удалить всё';
-			delall.className = 'delall';
-			parentel.appendChild(delall)
-		}
-		*/
-		el.closest('#dismissable').querySelector('#toggle').addEventListener("click", function(){
-			addBTN(parentel,el)
-		});
-		addBTN(parentel,el);
+	  var parentel = el.closest('div.style-scope.ytd-shelf-renderer');
+	  /* "Удалить всё" недописана
+	  if(!parentel.querySelector('.delall')){
+		var delall = document.createElement('span');
+		delall.textContent = 'Удалить всё';
+		delall.className = 'delall';
+		parentel.appendChild(delall)
+	  }
+	  */
+	  // Повторный перебор при щелчке "ещё"
+	  el.closest('#dismissable').querySelector('#toggle').addEventListener("click", function(){
+		addBTN(parentel,el)
+	  });
+	  addBTN(parentel,el);
 	}
-});
+  });
+}
+
+// Запускаем скрипт на странице с видео
+if(document.location.pathname.match(/^\/watch/)){
+	// Принудительно сбросим счётчик через 10 сек, чтобы не мучать браузер, если что-то пойдёт не так
+	var waitRecomendI = 0;
+	// Включаем "я не тормоз, подождите" для тормозного интерфейса Ютуба
+	let waitRecomend = setInterval(function(){
+	waitRecomendI++;
+	console.log(waitRecomendI);
+	if(waitRecomendI == 20){
+		console.log('STOP Youtube recommended');
+		clearInterval(waitRecomend);
+	}
+	var parentel = document.querySelector('#related #items');
+	if(parentel){
+		clearInterval(waitRecomend);
+		// Включаем ещё раз "я не тормоз, подождите" для тормозного интерфейса Ютуба
+		setTimeout(function(){
+			addBTN(parentel);
+		// Увеличить число в 2-5 раз, если комп или интернет слишком медленный и не у всех видео появляется кнопка "удалить". 1000 = 1 сек
+		},1000)
+	}
+  }, 500);
+}

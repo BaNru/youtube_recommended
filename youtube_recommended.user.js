@@ -79,7 +79,7 @@ function addBTN(parentel,el){
 	};
 	*/
 	[].forEach.call(list, function(list_el) {
-		if(!parentel.querySelector('.remthis')){
+		if(!list_el.querySelector('.remthis')){
 			var remthis = document.createElement('div');
 			remthis.textContent = 'Удалить';
 			remthis.onclick = removethis;

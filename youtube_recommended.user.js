@@ -211,7 +211,8 @@ if(document.location.pathname.match(/^\/watch/)){
   var reloadBTN = document.createElement('span');
   reloadBTN.textContent = '⟳';
   reloadBTN.onclick = function(){
-    addBTN(document.querySelector('#related #items'))
+  	document.querySelector('ytd-popup-container').style.visibility = 'hidden';
+    addBTN(document.querySelector('#related #items'));
   };
   reloadBTN.className = "reloadYR";
   var head = document.body;

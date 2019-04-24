@@ -3,7 +3,7 @@
 // @namespace   youtube, recommended
 // @description Удаление из рекомендуемого в пару кликов
 // @include     https://www.youtube.com/*
-// @version     3
+// @version     3.1
 // @grant       none
 // @author      BaNru
 // @license     GNU GPL v3
@@ -148,13 +148,15 @@ function addBTN(parentel,el){
 
 /* Стили */
 document.querySelector('body').insertAdjacentHTML('beforeend', `<style>
-  .delall,.remthis,.spamthis{background-color:#008bec;color:#fff;cursor:pointer;font-size:12px;padding:2px 7px;z-index:2000;}
-  .delall{margin:1px;float:right;}
-  .remthis,.spamthis{margin:5px;position:absolute;display:block;}
-  .delall:hover,.remthis:hover{background-color:#cb4437}
+	.delall,.remthis,.spamthis{background-color:#008bec;color:#fff;cursor:pointer;font-size:12px;padding:2px 7px;z-index:2000;}
+	.delall{margin:1px;float:right;}
+	.remthis,.spamthis{margin:5px;position:absolute;display:block;}
+	.delall:hover,.remthis:hover{background-color:#cb4437}
 	.spamthis{left:65px;background-color:#cb4437;}
-  .spamthis:hover{background-color:#262626;}
-	.reloadYR{position:fixed;right:0;bottom:0;width:32px;height:32px;background-color:#cb4437;z-index:999999;font-size:24px;text-align:center;line-height:32px;color:#fff;border-radius:16px 0 0 0;padding:2px 0 0 6px;cursor:pointer;}
+	.spamthis:hover{background-color:#262626;}
+	.reloadYR{opacity:0.2;position:fixed;right:0;bottom:0;width:16px;height:16px;background-color:#cb4437;z-index:10;
+		font-size:12px;text-align:center;line-height:14px;color:#fff;border-radius:12px 0 0 0;padding:2px 0 0 6px;cursor:pointer;}
+	.reloadYR:hover{opacity:1;}
 </style>`);
 
 

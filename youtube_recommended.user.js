@@ -41,7 +41,7 @@ function removethisevent(thisli){
 	// Проверяем открытый попап
 	if (document.querySelector('ytd-popup-container iron-dropdown') && document.querySelector('ytd-popup-container iron-dropdown').style.display !== "none"){
 			// Нажимаем "Скрыть"
-			document.querySelectorAll('ytd-popup-container ytd-menu-service-item-renderer')[2].click();
+			document.querySelectorAll('ytd-popup-container ytd-menu-service-item-renderer')[3].click();
 			// Нажимаем "почему нам это не интересно"
 			// Включаем "я не тормоз, подождите" для нового тормозного интерфейса
 			setTimeout(function(){
@@ -53,8 +53,8 @@ function removethisevent(thisli){
 						inputs = form.querySelectorAll('ytd-dismissal-reason-text-renderer');
 						// Чекаем нужные пункты
 						// inputs[0].querySelector('paper-checkbox').click(); // Я смотрю его не первый раз.
-						// inputs[1].querySelector('paper-checkbox').click(); // Мне оно не понравилось.
-						inputs[2].querySelector('paper-checkbox').click(); // Мне не интересен канал...
+						inputs[1].querySelector('paper-checkbox').click(); // Мне оно не понравилось.
+						// inputs[2].querySelector('paper-checkbox').click(); // Мне не интересен канал...
 						// Отправляем форму
 						setTimeout(function(){
 							popup.querySelector('#submit').click();
@@ -86,7 +86,7 @@ function spamthisevent(thisli){
 	// Проверяем открытый попап
 	if (document.querySelector('ytd-popup-container iron-dropdown') && document.querySelector('ytd-popup-container iron-dropdown').style.display !== "none"){
 			// Нажимаем "Пожаловаться"
-			document.querySelectorAll('ytd-popup-container ytd-menu-service-item-renderer')[3].click();
+			document.querySelectorAll('ytd-popup-container ytd-menu-service-item-renderer')[4].click();
 			// Нажимаем почему дерьмо надо заблокировать
 			// Включаем "я не тормоз, подождите" для нового тормозного интерфейса
 			setTimeout(function(){
